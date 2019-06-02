@@ -1,0 +1,25 @@
+<li class="list-group-item">
+
+	<div class="row">
+
+
+
+		<div class="col-7">
+			<p>{{id}}. {{burger_name}} |  Topping: {{topping}}</p>
+
+		</div>
+
+
+		<div class="col-5 text-right">
+			{{#unless devoured}}
+			<button class="btn btn-success active change-devoured" data-id="{{id}}" data-name="{{burger_name}}" data-topping="{{topping}}">
+				Devoure it!
+			</button>
+			{{/unless}}
+
+			<button role="button"
+				aria-pressed="true" class="btn btn-danger active delete-burger" data-id="{{id}}" data-name="{{burger_name}}">Delete</button>
+
+		</div>
+	</div>
+</li>
