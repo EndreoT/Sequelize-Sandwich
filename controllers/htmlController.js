@@ -1,6 +1,9 @@
-const express = require('express');
+const utilFunctions = require('./utils')
+
 
 exports.getIndex = function (req, res) {
-  // const context: BurgerData[] = await burger.selectAll();
-  res.render('index', { burgers: 'context' });
+  utilFunctions.getAllBurgers().then(context => {
+    res.render('index', { burgers: context });
+  });
+
 }

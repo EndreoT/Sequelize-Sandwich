@@ -5,20 +5,20 @@
 
 
 		<div class="col-7">
-			<p>{{id}}. {{burger_name}} |  Topping: {{topping}}</p>
+			<p>{{id}}. {{name}}</p>
 
 		</div>
 
 
 		<div class="col-5 text-right">
 			{{#unless devoured}}
-			<button class="btn btn-success active change-devoured" data-id="{{id}}" data-name="{{burger_name}}" data-topping="{{topping}}">
+			<button class="btn btn-success active change-devoured" data-id="{{id}}" data-name="{{name}}">
 				Devoure it!
 			</button>
 			{{/unless}}
 
 			<button role="button"
-				aria-pressed="true" class="btn btn-danger active delete-burger" data-id="{{id}}" data-name="{{burger_name}}">Delete</button>
+				aria-pressed="true" class="btn btn-danger active delete-burger" data-id="{{id}}" data-name="{{name}}">Delete</button>
 
 		</div>
 	</div>

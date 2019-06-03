@@ -29,13 +29,10 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-
 // Routing
 // =============================================================
 app.use('/', htmlRouter);
 app.use('/api', apiRouter);
-
-// require("./routes/api-routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================

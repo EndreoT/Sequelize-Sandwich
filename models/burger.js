@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const Burger = sequelize.define("burger", {
+  const Burger = sequelize.define("Burger", {
         name: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -14,7 +14,7 @@ module.exports = function (sequelize, DataTypes) {
         },
       });
       Burger.associate = function (models) {
-        models.burger.belongsTo(models.customer, {
+        models.Burger.belongsTo(models.Customer, {
           onDelete: "CASCADE",
           foreignKey: {
             allowNull: false
