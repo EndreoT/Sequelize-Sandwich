@@ -1,9 +1,25 @@
+const Sequelize = require('sequelize');
 const db = require("../models");
 const utilFunctions = require('./utils')
 
 
-exports.getAllBurgers = async function (req, res) {
-  utilFunctions.getAllBurgers().then(response => {
+exports.getAllBurgers = function (req, res) {
+  utilFunctions.getAllBurgers(
+    {
+      include: [{
+        model: db.Customer,
+        include: {
+          model: db.Customer,
+          // include: [model: 'customers.id'] }
+        }
+        
+    }]
+      // where: {
+      //   CustomerId: Sequelize.col('Customers.id')
+      // },
+      // include: [db.Customer]
+    }
+  ).then(response => {
     res.json(response);
   });
 }
@@ -21,12 +37,16 @@ exports.createCustomer = function (req, res) {
 }
 
 
-// export async function getBurger(req: express.Request, res: express.Response) {
-//   const burgerId: number = utils.convertToInteger(req.params.burgerId);
-
-//   const burgerRes: BurgerData[] = await burger.selectOne(burgerId);
-//   res.json(burgerRes);
-// }
+exports.getBurger = function (req, res) {
+  const burgerId = req.params.burgerId;
+  db.Burger.findAll({
+    where: {
+      id: burgerId
+    }
+  }).then(result => {
+    res.json(result);
+  })
+}
 
 exports.addBurger = function (req, res) {
   const body = req.body;
@@ -43,25 +63,30 @@ exports.addBurger = function (req, res) {
   })
 }
 
-// export async function updateBurger(req: express.Request, res: express.Response) {
-//   try {
-//     const body = req.body;
-//     const burgerId: number = utils.convertToInteger(req.params.burgerId);
-//     const burgerName: string = body.burgerName;
-//     const topping: string = body.topping;
-//     const devoured: boolean = utils.convertStringToBoolean(body.devoured);
+exports.updateBurger = function (req, res) {
+  // try {
+  //   const body = req.body;
+  //   const burgerId = utils.convertToInteger(req.params.burgerId);
+  //   const burgerName = body.burgerName;
+  //   const topping = body.topping;
+  //   const devoured = utils.convertStringToBoolean(body.devoured);
 
-//     const result: any = await burger.updateOne(burgerId, burgerName, topping, devoured);
-//     res.json(result);
+  //   const result = await burger.updateOne(burgerId, burgerName, topping, devoured);
+  //   res.json(result);
 
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+  // } catch (err) {
+  //   console.log(err);
+  // }
+}
 
-// export async function deleteBurger(req: express.Request, res: express.Response) {
-//   const burgerId: number = utils.convertToInteger(req.params.burgerId);
+exports.deleteBurger = function (req, res) {
+  const burgerId = req.params.burgerId;
+  db.Burger.destroy({
+    where: {
+      id: burgerId
+    }
+  }).then(result => {
+    res.json(result);
+  })
 
-//   const result: any = await burger.deleteOne(burgerId);
-//   res.json(result);
-// }
+}
