@@ -15,6 +15,8 @@ router.put('/burgers/:burgerId', burgerController.updateBurger);
 
 router.delete('/burgers/:burgerId', burgerController.deleteBurger);
 
+router.put('/burgers/devour/:burgerId', burgerController.devourBurger);
+
 
 router.get('/customers', customerController.getCustomers)
 
