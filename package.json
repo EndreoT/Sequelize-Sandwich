@@ -2,9 +2,9 @@
   "name": "sequelize-sandwich",
   "version": "1.0.0",
   "description": "Sequelized-Sandwich",
-  "main": "server.js",
+  "main": "node server.js",
   "scripts": {
-    "start": "server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon server.js"
   },
