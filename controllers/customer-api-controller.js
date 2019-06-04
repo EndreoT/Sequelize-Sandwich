@@ -1,5 +1,6 @@
 const db = require("../models");
 
+
 exports.getCustomers = async function (req, res) {
   const customers = await db.Customer.findAll(
     { include: [db.Burger] }
@@ -20,6 +21,10 @@ exports.getCustomer = async function (req, res) {
 }
 
 exports.createCustomer = async function (req, res) {
-  const newCustomer = await db.Customer.create({ name: req.body.name });
-  return res.json(newCustomer);
+  try {
+    const newCustomer = await db.Customer.create({ name: req.body.name });
+    return res.json(newCustomer);
+  } catch (err) {
+    return res.json(err);
+  }
 }

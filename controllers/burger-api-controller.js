@@ -32,21 +32,24 @@ exports.addBurger = async function (req, res) {
     devoured: body.devoured,
     CustomerId: body.CustomerId,
   }
-
-  const newBurger = await db.Burger.create(burger);
-  return res.json(newBurger);
+  try {
+    const newBurger = await db.Burger.create(burger);
+    return res.json(newBurger);
+  } catch (err) {
+    res.json(err)
+  }
 }
 
 exports.updateBurger = async function (req, res) {
-  try {
-    const body = req.body;
-    const id = req.params.burgerId;
-    const burger = {
-      name: body.name,
-      devoured: body.devoured,
-      CustomerId: body.CustomerId,
-    }
 
+  const body = req.body;
+  const id = req.params.burgerId;
+  const burger = {
+    name: body.name,
+    devoured: body.devoured,
+    CustomerId: body.CustomerId,
+  }
+  try {
     const updatedBurger = await db.Burger.update(
       burger,
       {
@@ -57,7 +60,7 @@ exports.updateBurger = async function (req, res) {
     return res.json(updatedBurger);
 
   } catch (err) {
-    console.log(err);
+    res.json(err);
   }
 }
 
@@ -83,12 +86,17 @@ exports.devourBurger = async function (req, res) {
 
 exports.deleteBurger = async function (req, res) {
   const burgerId = req.params.burgerId;
-  const deletedBurger = await db.Burger.destroy(
-    {
-      where: {
-        id: burgerId
+  try {
+    const deletedBurger = await db.Burger.destroy(
+      {
+        where: {
+          id: burgerId
+        }
       }
-    }
-  );
-  return res.json(deletedBurger);
+    );
+    return res.json(deletedBurger);
+  } catch (err) {
+    console.log(err)
+  }
+
 }
