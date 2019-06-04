@@ -1,24 +1,44 @@
 
 $(function () {
-  const toppings = {
-    '0': 'Cow',
-    '1': 'Tomatoes',
-    '2': 'Lettuce',
-    '3': 'Fried Egg',
-    '4': 'Avocado',
-    '5': 'Bacon'
+
+  const customerSelect = $('.customer-select');
+
+  getCustomers();
+
+  function getCustomers() {
+    $.get("/api/customers", renderCustomerList)
+  }
+
+  function renderCustomerList(data) {
+
+    const rowsToAdd = [];
+    for (let i = 0; i < data.length; i++) {
+      rowsToAdd.push(createAuthorRow(data[i]));
+    }
+    customerSelect.append(rowsToAdd);
+  }
+
+  function createAuthorRow(author) {
+    const listOption = $("<option>");
+    listOption
+      .attr("value", author.id)
+      .text(author.name);
+    return listOption;
   }
 
   $(".change-devoured").click(function(event) {
     const id = $(this).data("id");
-
+    const CustomerId = $(this)
+      .siblings(".form-group")
+      .children(".customer-select")
+      .children("option:selected")
+      .val();
     const devouredBurger = {
-      burgerName: $(this).data("name"),
-      topping: $(this).data("topping"),
-      devoured: true
+      devoured: true,
+      CustomerId,
     };
     
-    $.ajax("/api/burgers/" + id, {
+    $.ajax("/api/burgers/devour/" + id, {
       type: "PUT",
       data: devouredBurger
     }).then(
@@ -30,12 +50,9 @@ $(function () {
 
   $("#submit-burger").click(function (event) {
     event.preventDefault();
-    const toppingId = $("[name=topping]:checked").val().trim();
     
     const burger = {
-      burgerName: $("#burger-name").val().trim(),
-      topping: toppings[toppingId],
-      devoured: $("[name=devoured]:checked").val().trim()
+      name: $("#burger-name").val().trim(),
     };
 
     $.ajax("/api/burgers", {

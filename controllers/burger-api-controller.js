@@ -22,21 +22,19 @@ exports.getBurger = async function (req, res) {
       include: [db.Customer]
     }
   );
-  res.json(burger)
+  return res.json(burger)
 }
 
 exports.addBurger = async function (req, res) {
   const body = req.body;
   const burger = {
     name: body.name,
-    devoured: body.devoured,
-    CustomerId: body.CustomerId,
   }
   try {
     const newBurger = await db.Burger.create(burger);
     return res.json(newBurger);
   } catch (err) {
-    res.json(err)
+    return res.json(err)
   }
 }
 
@@ -67,10 +65,12 @@ exports.updateBurger = async function (req, res) {
 exports.devourBurger = async function (req, res) {
   try {
     const id = req.params.burgerId;
+    const CustomerId = req.body.CustomerId;
 
     const updatedBurger = await db.Burger.update(
       {
-        devoured: true
+        devoured: true,
+        CustomerId, 
       },
       {
         where: {
@@ -98,5 +98,4 @@ exports.deleteBurger = async function (req, res) {
   } catch (err) {
     console.log(err)
   }
-
 }

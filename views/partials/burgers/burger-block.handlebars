@@ -5,20 +5,30 @@
 
 
 		<div class="col-7">
-			<p>{{id}}. {{name}} {{Customer.name}}</p>
+			{{#unless devoured}}
+			<p>{{id}}. {{name}}</p>
+			{{/unless}}
+			{{#if devoured}}
+			<p>{{id}}. {{name}} | Eaten by {{Customer.name}}</p>
+			{{/if}}
 
 		</div>
 
 
 		<div class="col-5 text-right">
 			{{#unless devoured}}
+			<div class="form-group">
+				<label for="category">Select Customer:</label>
+				<select class="customer-select">
+				</select>
+			</div>
 			<button class="btn btn-success active change-devoured" data-id="{{id}}" data-name="{{name}}">
 				Devoure it!
 			</button>
 			{{/unless}}
 
-			<button role="button"
-				aria-pressed="true" class="btn btn-danger active delete-burger" data-id="{{id}}" data-name="{{name}}">Delete</button>
+			<button role="button" aria-pressed="true" class="btn btn-danger active delete-burger" data-id="{{id}}"
+				data-name="{{name}}">Delete</button>
 
 		</div>
 	</div>
