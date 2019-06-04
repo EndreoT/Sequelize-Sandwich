@@ -1,6 +1,6 @@
 const db = require("../models");
 
 
-exports.getAllBurgers = function () {
-  return db.Burger.findAll({});
+exports.getAllBurgers = function (options) {
+  return db.Burger.findAll(options);
 }

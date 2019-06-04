@@ -1,22 +1,23 @@
 const express = require('express');
-const apiController = require('../controllers/apiControllers');
+const burgerController = require('../controllers/burger-api-controller');
+const customerController = require('../controllers/customer-api-controller')
 
 const router = express.Router();
 
 
-router.get('/burgers', apiController.getAllBurgers);
+router.get('/burgers', burgerController.getAllBurgers);
 
-router.get('/burgers/:burgerId', apiController.getBurger);
+router.get('/burgers/:burgerId', burgerController.getBurger);
 
-router.post('/burgers', apiController.addBurger);
+router.post('/burgers', burgerController.addBurger);
 
-router.put('/burgers/:burgerId', apiController.updateBurger);
+router.put('/burgers/:burgerId', burgerController.updateBurger);
 
-router.delete('/burgers/:burgerId', apiController.deleteBurger);
+router.delete('/burgers/:burgerId', burgerController.deleteBurger);
 
 
-router.get('/customers', apiController.getCustomers)
+router.get('/customers', customerController.getCustomers)
 
-router.post('/customers', apiController.createCustomer)
+router.post('/customers', customerController.createCustomer)
 
 module.exports = router;

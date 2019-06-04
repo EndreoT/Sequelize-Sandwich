@@ -1,54 +1,34 @@
-const Sequelize = require('sequelize');
 const db = require("../models");
-const utilFunctions = require('./utils')
+// const utilFunctions = require('./utils')
 
 
 exports.getAllBurgers = function (req, res) {
-  utilFunctions.getAllBurgers(
-    {
-      include: [{
-        model: db.Customer,
-        include: {
-          model: db.Customer,
-          // include: [model: 'customers.id'] }
-        }
-        
-    }]
-      // where: {
-      //   CustomerId: Sequelize.col('Customers.id')
-      // },
-      // include: [db.Customer]
-    }
+  db.Burger.findAll({include: [db.Customer]}
   ).then(response => {
     res.json(response);
   });
 }
-
-exports.getCustomers = function (req, res) {
-  db.Customer.findAll({}).then(function (result) {
-    res.json(result);
-  })
-}
-
-exports.createCustomer = function (req, res) {
-  db.Customer.create({ name: req.body.name }).then(function (result) {
-    res.json(result);
-  })
-}
-
 
 exports.getBurger = function (req, res) {
   const burgerId = req.params.burgerId;
   db.Burger.findAll({
     where: {
       id: burgerId
-    }
+    },
+    include: [db.Customer]
   }).then(result => {
     res.json(result);
   })
 }
 
 exports.addBurger = function (req, res) {
+  // const body = req.body;
+  // const burger = {  
+  //   name: body.name,
+  //   devoured: body.devoured,
+  //   CustomerId: body.CustomerId,
+
+  // }
   const body = req.body;
   const name = body.name;
   const devoured = body.devoured;
@@ -57,7 +37,7 @@ exports.addBurger = function (req, res) {
   db.Burger.create({
     name,
     devoured,
-    CustomerId,
+    CustomerId
   }).then(result => {
     res.json(result);
   })
