@@ -20,6 +20,8 @@ router.put('/burgers/devour/:burgerId', burgerController.devourBurger);
 
 router.get('/customers', customerController.getCustomers)
 
+router.get('/customers/:customerId', customerController.getCustomer)
+
 router.post('/customers', customerController.createCustomer)
 
 module.exports = router;

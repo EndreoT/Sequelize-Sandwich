@@ -1,13 +1,25 @@
 const db = require("../models");
 
-exports.getCustomers = function (req, res) {
-  db.Customer.findAll({}).then(function (result) {
-    res.json(result);
-  })
+exports.getCustomers = async function (req, res) {
+  const customers = await db.Customer.findAll(
+    { include: [db.Burger] }
+  )
+  return res.json(customers);
 }
 
-exports.createCustomer = function (req, res) {
-  db.Customer.create({ name: req.body.name }).then(function (result) {
-    res.json(result);
-  })
+exports.getCustomer = async function (req, res) {
+  const customer = await db.Customer.findAll(
+    {
+      where: {
+        id: req.params.customerId
+      },
+      include: [db.Burger]
+    }
+  )
+  return res.json(customer)
+}
+
+exports.createCustomer = async function (req, res) {
+  const newCustomer = await db.Customer.create({ name: req.body.name });
+  return res.json(newCustomer);
 }
