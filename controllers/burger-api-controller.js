@@ -12,6 +12,7 @@ exports.getAllBurgers = async function (req, res) {
   return res.json(burgers);
 }
 
+// Get single burger by id
 exports.getBurger = async function (req, res) {
   const burgerId = req.params.burgerId;
   const burger = await db.Burger.findAll(
@@ -25,6 +26,7 @@ exports.getBurger = async function (req, res) {
   return res.json(burger)
 }
 
+// Create burger
 exports.addBurger = async function (req, res) {
   const body = req.body;
   const burger = {
@@ -62,6 +64,7 @@ exports.updateBurger = async function (req, res) {
   }
 }
 
+// assign customer id to burger and set burger devoured property to true
 exports.devourBurger = async function (req, res) {
   try {
     const id = req.params.burgerId;

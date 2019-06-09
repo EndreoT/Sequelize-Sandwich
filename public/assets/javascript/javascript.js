@@ -3,29 +3,33 @@ $(function () {
 
   const customerSelect = $('.customer-select');
 
+  // Get all customers on page load
   getCustomers();
 
   function getCustomers() {
     $.get("/api/customers", renderCustomerList)
   }
 
+  // Adds customer html option elements to DOM
   function renderCustomerList(data) {
 
     const rowsToAdd = [];
     for (let i = 0; i < data.length; i++) {
-      rowsToAdd.push(createAuthorRow(data[i]));
+      rowsToAdd.push(createCustomerRow(data[i]));
     }
     customerSelect.append(rowsToAdd);
   }
 
-  function createAuthorRow(author) {
+  // Creates an html option element with customer information
+  function createCustomerRow(customer) {
     const listOption = $("<option>");
     listOption
-      .attr("value", author.id)
-      .text(author.name);
+      .attr("value", customer.id)
+      .text(customer.name);
     return listOption;
   }
 
+  // Updates devoured state and customer id of burger
   $(".change-devoured").click(function(event) {
     const id = $(this).data("id");
     const CustomerId = $(this)
@@ -48,6 +52,7 @@ $(function () {
     );
   });
 
+  // Create a burger
   $("#submit-burger").click(function (event) {
     event.preventDefault();
     
@@ -65,6 +70,7 @@ $(function () {
     );
   });
 
+  // Delete a burger
   $(".delete-burger").click(function(event) {
     event.preventDefault();
     const id = $(this).data("id");

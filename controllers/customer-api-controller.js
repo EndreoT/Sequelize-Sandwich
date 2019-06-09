@@ -8,6 +8,7 @@ exports.getCustomers = async function (req, res) {
   return res.json(customers);
 }
 
+// Get customer by id
 exports.getCustomer = async function (req, res) {
   const customer = await db.Customer.findAll(
     {
